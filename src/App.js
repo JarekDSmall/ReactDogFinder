@@ -1,25 +1,76 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import Nav from './Nav';
+import DogList from './DogList';
+import DogDetails from './DogDetails';
+import whiskeyImg from './whiskey.jpg';
+import dukeImg from './duke.jpg';
+import perryImg from './perry.jpg';
+import tubbyImg from './tubby.jpg';
 
-function App() {
+
+function App(props) {
+  const { dogs } = props;
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div>
+        <Nav dogs={dogs} />
+        <Routes>
+          <Route path="/dogs" element={<DogList dogs={dogs} />} />
+          <Route path="/dogs/:name" element={<DogDetails dogs={dogs} />} />
+          <Route path="*" element={<Navigate to="/dogs" />} />
+        </Routes>
+      </div>
+    </Router>
   );
 }
+
+
+App.defaultProps = {
+  dogs: [
+    {
+      name: "Whiskey",
+      age: 5,
+      src: whiskeyImg,
+      facts: [
+        "Whiskey loves eating popcorn.",
+        "Whiskey is a terrible guard dog.",
+        "Whiskey wants to cuddle with you!"
+      ]
+    },
+    {
+      name: "Duke",
+      age: 3,
+      src: dukeImg,
+      facts: [
+        "Duke believes that ball is life.",
+        "Duke likes snow.",
+        "Duke enjoys pawing other dogs."
+      ]
+    },
+    {
+      name: "Perry",
+      age: 4,
+      src: perryImg,
+      facts: [
+        "Perry loves all humans.",
+        "Perry demolishes all snacks.",
+        "Perry hates the rain."
+      ]
+    },
+    {
+      name: "Tubby",
+      age: 4,
+      src: tubbyImg,
+      facts: [
+        "Tubby is really stupid.",
+        "Tubby does not like walks.",
+        "Angelina used to hate Tubby, but claims not to anymore."
+      ]
+    }
+  ]
+};
+
 
 export default App;
